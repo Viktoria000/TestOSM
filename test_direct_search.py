@@ -2,6 +2,7 @@ import requests
 import pytest
 import allure
 from direct_param_list import direct_param_list_value
+from reverse_param_list import reverse_param_list_value
 
 # объявляем класс и его параметры
 class Coordinates:
@@ -54,7 +55,7 @@ def test_direct_any_params(param_list):
 
     assert find_coordinates, "not find expected coordinates"
 
-@pytest.mark.parametrize("reverse_param", reverse_param_list)
+@pytest.mark.parametrize("reverse_param", reverse_param_list_value)
 def test_revers_param(reverse_param):
     lat = reverse_param["coordinats"]["lat"]
     lon = reverse_param["coordinats"]["lon"]

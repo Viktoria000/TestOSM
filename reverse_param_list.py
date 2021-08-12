@@ -4,5 +4,6 @@ reverse_param_list_value = [
         "expected_address": {
             "city": "Москва",
             "country": "Россия"
-        }
+        },
+    }
 ]
