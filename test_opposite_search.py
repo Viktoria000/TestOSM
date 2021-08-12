@@ -1,9 +1,7 @@
 import requests
 import pytest
 import allure
-from direct_param_list import direct_param_list_value
 
-# объявляем класс и его параметры
 class Coordinates:
 
     # конструктор с параметрами
@@ -12,15 +10,12 @@ class Coordinates:
         self.lat = lat
         self.lon = lon
 
-    # функция "печати" содержимого класса
     def print(self):
         print("display_name: ", self.display_name)
         print("lat: ", self.lat)
         print("lon: ", self.lon)
         print("")
 
-
-# объявляем функцию, добавляем параметр в словарь, отправляем запрос, ответ в формате джейсон
 def direct_search(req_params):
     req_params["format"] = "json"
     response = requests.get("https://nominatim.openstreetmap.org/search?", params=req_params)
@@ -35,9 +30,7 @@ def direct_search(req_params):
 
     return result
 
-
-# объявляем тест с параметрами (два набора входных данных)
-@pytest.mark.parametrize("param_list", direct_param_list_value)
+@pytest.mark.parametrize("param_list", param_list_value)
 def test_direct_any_params(param_list):
     req_params = param_list["req_params"]
     coordinates_list = direct_search(req_params)
@@ -53,15 +46,3 @@ def test_direct_any_params(param_list):
             coordinates.print()
 
     assert find_coordinates, "not find expected coordinates"
-
-@pytest.mark.parametrize("reverse_param", reverse_param_list)
-def test_revers_param(reverse_param):
-    lat = reverse_param["coordinats"]["lat"]
-    lon = reverse_param["coordinats"]["lon"]
-    dict_requests = {"lat": lat, "lon": lon, "format": "json"}
-    response = requests.get("https://nominatim.openstreetmap.org/reverse?", params=dict_requests)
-    json_response = response.json()
-    for object in json_response:
-        address = object["address"]
-        received_city = object["city"]
-        received_country = object['country']
