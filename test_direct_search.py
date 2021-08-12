@@ -36,33 +36,37 @@ def direct_search(req_params):
 
     return result
 
+#
+# # объявляем тест с параметрами (два набора входных данных)
+# @pytest.mark.parametrize("param_list", direct_param_list_value)
+# def test_direct_any_params(param_list):
+#     req_params = param_list["req_params"]
+#     coordinates_list = direct_search(req_params)
+#
+#     expected_lat = param_list["expected_lat"]
+#     expected_lon = param_list["expected_lon"]
+#
+#     find_coordinates = False
+#     for coordinates in coordinates_list:
+#         if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
+#             find_coordinates = True
+#             print("FOUND!!")
+#             coordinates.print()
+#
+#     assert find_coordinates, "not find expected coordinates"
 
-# объявляем тест с параметрами (два набора входных данных)
-@pytest.mark.parametrize("param_list", direct_param_list_value)
-def test_direct_any_params(param_list):
-    req_params = param_list["req_params"]
-    coordinates_list = direct_search(req_params)
-
-    expected_lat = param_list["expected_lat"]
-    expected_lon = param_list["expected_lon"]
-
-    find_coordinates = False
-    for coordinates in coordinates_list:
-        if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
-            find_coordinates = True
-            print("FOUND!!")
-            coordinates.print()
-
-    assert find_coordinates, "not find expected coordinates"
 
 @pytest.mark.parametrize("reverse_param", reverse_param_list_value)
 def test_revers_param(reverse_param):
     lat = reverse_param["coordinats"]["lat"]
     lon = reverse_param["coordinats"]["lon"]
-    dict_requests = {"lat": lat, "lon": lon, "format": "json"}
+    dict_requests = {"lat": lat, "lon": lon, "format": "json", "accept-language": "ru"}
     response = requests.get("https://nominatim.openstreetmap.org/reverse?", params=dict_requests)
     json_response = response.json()
-    for object in json_response:
-        address = object["address"]
-        received_city = object["city"]
-        received_country = object['country']
+    expected_object = reverse_param["expected_address"]
+    if expected_object["city"] == json_response["address"]["city"] and expected_object["country"] == json_response["address"]["country"]:
+        print("Good job:", json_response["address"]["city"], json_response["address"]["country"])
+
+
+
+
