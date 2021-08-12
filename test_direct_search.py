@@ -36,24 +36,24 @@ def direct_search(req_params):
 
     return result
 
-#
-# # объявляем тест с параметрами (два набора входных данных)
-# @pytest.mark.parametrize("param_list", direct_param_list_value)
-# def test_direct_any_params(param_list):
-#     req_params = param_list["req_params"]
-#     coordinates_list = direct_search(req_params)
-#
-#     expected_lat = param_list["expected_lat"]
-#     expected_lon = param_list["expected_lon"]
-#
-#     find_coordinates = False
-#     for coordinates in coordinates_list:
-#         if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
-#             find_coordinates = True
-#             print("FOUND!!")
-#             coordinates.print()
-#
-#     assert find_coordinates, "not find expected coordinates"
+
+# объявляем тест с параметрами (два набора входных данных)
+@pytest.mark.parametrize("param_list", direct_param_list_value)
+def test_direct_any_params(param_list):
+    req_params = param_list["req_params"]
+    coordinates_list = direct_search(req_params)
+
+    expected_lat = param_list["expected_lat"]
+    expected_lon = param_list["expected_lon"]
+
+    find_coordinates = False
+    for coordinates in coordinates_list:
+        if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
+            find_coordinates = True
+            print("FOUND!!")
+            coordinates.print()
+
+    assert find_coordinates, "not find expected coordinates"
 
 
 @pytest.mark.parametrize("reverse_param", reverse_param_list_value)
@@ -64,9 +64,12 @@ def test_revers_param(reverse_param):
     response = requests.get("https://nominatim.openstreetmap.org/reverse?", params=dict_requests)
     json_response = response.json()
     expected_object = reverse_param["expected_address"]
-    if expected_object["city"] == json_response["address"]["city"] and expected_object["country"] == json_response["address"]["country"]:
-        print("Good job:", json_response["address"]["city"], json_response["address"]["country"])
-
+    for object in expected_object:
+        expected_name = expected_object[object]
+        expected_response = json_response["address"][object]
+        if expected_name == expected_response:
+            print("Result:", expected_response)
+        assert expected_name == expected_response
 
 
 
