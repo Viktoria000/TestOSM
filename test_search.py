@@ -45,20 +45,20 @@ class TestOSM:
         return result
 
     # объявляем тест с параметрами (два набора входных данных)
-    # @pytest.mark.parametrize("param_list", direct_param_list_value)
-    # def test_direct_any_params(self, param_list):
-    #     req_params = param_list["req_params"]
-    #     coordinates_list = self.direct_search(req_params)
-    #     expected_lat = param_list["expected_lat"]
-    #     expected_lon = param_list["expected_lon"]
-    #     find_coordinates = False
-    #
-    #     for coordinates in coordinates_list:
-    #         if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
-    #             find_coordinates = True
-    #             print("FOUND!!")
-    #             coordinates.print()
-    #     assert find_coordinates, "Не найдены ожидаемые координаты"
+    @pytest.mark.parametrize("param_list", direct_param_list_value)
+    def test_direct_any_params(self, param_list):
+        req_params = param_list["req_params"]
+        coordinates_list = self.direct_search(req_params)
+        expected_lat = param_list["expected_lat"]
+        expected_lon = param_list["expected_lon"]
+        find_coordinates = False
+
+        for coordinates in coordinates_list:
+            if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
+                find_coordinates = True
+                print("FOUND!!")
+                coordinates.print()
+        assert find_coordinates, "Не найдены ожидаемые координаты"
 
     @pytest.mark.parametrize("reverse_param", reverse_param_list_value)
     def test_revers_param(self, reverse_param):
