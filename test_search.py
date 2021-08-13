@@ -4,9 +4,9 @@ import allure
 from direct_param_list import direct_param_list_value
 from reverse_param_list import reverse_param_list_value
 
+
 # объявляем класс и его параметры
 class Coordinates:
-
     # конструктор с параметрами
     def __init__(self, display_name, lat, lon):
         self.display_name = display_name
@@ -44,7 +44,6 @@ class TestOSM:
 
         return result
 
-    # объявляем тест с параметрами (два набора входных данных)
     @pytest.mark.parametrize("param_list", direct_param_list_value)
     def test_direct_any_params(self, param_list):
         req_params = param_list["req_params"]
@@ -56,7 +55,6 @@ class TestOSM:
         for coordinates in coordinates_list:
             if coordinates.lat == expected_lat and coordinates.lon == expected_lon:
                 find_coordinates = True
-                print("FOUND!!")
                 coordinates.print()
         assert find_coordinates, "Не найдены ожидаемые координаты"
 

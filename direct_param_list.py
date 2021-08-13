@@ -18,7 +18,7 @@ direct_param_list_value = [
         "req_params": {"street": "некорректные_параметры"},
         "expected_lat": "43.2611844",
         "expected_lon": "-73.5800934"
-    },
+    }
     # { Для данного набора возвращаются всегда разные координаты)
     #     "req_params": {"street": "22 Broadway"},
     #     "expected_lat": "40.8921337",

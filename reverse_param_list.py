@@ -5,7 +5,6 @@ reverse_param_list_value = [
             "city": "Москва",
             "country": "Россия"
         }
-
     },
     {
         "coordinats": {"lat": 1, "lon": 1},
