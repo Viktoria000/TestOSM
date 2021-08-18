@@ -1,6 +1,7 @@
 import requests
 import pytest
 import allure
+import logging
 from direct_param_list import direct_param_list_value
 from reverse_param_list import reverse_param_list_value
 
@@ -19,6 +20,17 @@ class Coordinates:
         print("lat: ", self.lat)
         print("lon: ", self.lon)
         print("")
+
+class Server:
+    @pytest.fixture()
+    def server(self, response):
+        response = response.status_code
+        assert response == 200, "Не удалось отправить запрос"
+       response = response.content
+        assert response, "Пустой ответ"
+        response = response.json()
+        assert response, "Пустой json"
+
 
 
 class TestOSM:
