@@ -1,0 +1,1 @@
+from fixtures import object_class_server

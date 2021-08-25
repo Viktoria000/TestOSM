@@ -1,8 +1,9 @@
 import pytest
-from server import Server
+from server import ServerConnection
 
 
 @pytest.fixture(scope='module', autouse=True)
 def object_class_server():
-    object_class = Server("https://nominatim.openstreetmap.org/")
+    object_class = ServerConnection("https://nominatim.openstreetmap.org/")
     yield object_class
+
