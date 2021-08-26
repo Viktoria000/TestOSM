@@ -16,14 +16,16 @@ class ServerConnection:
         assert response.content, "Пустой ответ"
         with allure.step("Формируем ответ в формат json"):
             json_response = response.json()
-        print(json_response)
+        print("response data:", json_response)
         assert json_response, "Пустой json"
         return json_response
 
     def search(self, params):
         full_url = self.base_url + "search"
-        self.send_request(full_url, params)
-        return self.send_request()
-     #
-     # def Reverse(self, params):
-     #     full_url = self.base_url + "reverse"
+        server_response_json = self.send_request(full_url, params)
+        return server_response_json
+
+    def reverse(self, params):
+        full_url = self.base_url + "reverse"
+        server_response_json = self.send_request(full_url, params)
+        return server_response_json
