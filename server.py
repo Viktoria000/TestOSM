@@ -1,5 +1,7 @@
 import requests
 import allure
+import logging
+log_server = logging.getLogger("server")
 
 
 class ServerConnection:
@@ -11,12 +13,12 @@ class ServerConnection:
         params["format"] = "json"
         response = requests.get(full_url, params=params)
         assert response.status_code == 200, "Не удалось отправить запрос"
-        print("request URL:", response.url)
-        print("response :", response.status_code)
+        log_server.debug(f"request URL: {response.url}")
+        log_server.debug(f"response : {response.status_code}")
         assert response.content, "Пустой ответ"
         with allure.step("Формируем ответ в формат json"):
             json_response = response.json()
-        print("response data:", json_response)
+        log_server.debug(f"response data: {json_response}")
         assert json_response, "Пустой json"
         return json_response
 
